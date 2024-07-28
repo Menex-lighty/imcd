@@ -13,7 +13,7 @@ CREATE TABLE Assets (
     department_id CHAR(10),
     purchase_date DATE,
     last_maintenance_date DATE,
-    iot_device_id CHAR(10)
+   
 );
 
 -- Create the Departments table
