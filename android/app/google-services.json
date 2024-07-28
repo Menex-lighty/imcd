@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "403937251543",
+    "project_id": "imcd-95390",
+    "storage_bucket": "imcd-95390.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:403937251543:android:f4b91dbdee5de3349f2092",
+        "android_client_info": {
+          "package_name": "com.example.imcd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGNJXRclGO4NbVNuURcDSyqdd3n0MJdvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
