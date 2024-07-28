@@ -1,0 +1,1 @@
+psql -U postgres -c "show data_directory;
