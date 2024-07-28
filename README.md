@@ -9,9 +9,13 @@ This project aims to streamline the management of municipal vehicles by providin
 ## Features
 
 *  **Real-time Vehicle Tracking:** Visualize vehicle locations and status on a map using Google Maps integration.
+
 *  **Maintenance Logging:** Drivers can log maintenance activities and report issues directly through the app.
+
 *  **Admin Dashboard:** Administrators gain insights through reports, schedule maintenance, and manage resources efficiently.
+
 *  **Citizen Feedback:** A platform for citizens to provide feedback and report concerns about vehicles or routes.
+
 *  **SUMO Simulation:** A large-scale simulation (10,000 vehicles) using SUMO demonstrates the system's effectiveness in a realistic environment.
 
 ## Tech Stack
