@@ -55,7 +55,7 @@ This project aims to streamline the management of municipal vehicles by providin
   *  `/widgets`: Reusable UI components.
   *  `/services`: Logic for data fetching, Firebase interaction, etc.
 *  `/database`: PostgreSQL database scripts (schema creation, initial data).
-*  `/sumo`: SUMO configuration files for the simulation.
+
 
 ## Contributing
 
