@@ -4,6 +4,10 @@ import math
 import csv
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+from matplotlib.animation import FuncAnimation
+import matplotlib.dates as mdates
+from matplotlib.colors import LinearSegmentedColormap
 
 # Sumo configuration
 sumo_cmd = ["sumo", "-c", "Indore2.sumocfg"]
@@ -146,30 +150,72 @@ df = pd.read_csv(csv_file_path)
 # Convert timestamp to datetime format
 df['timestamp'] = pd.to_datetime(df['timestamp'])
 
-# Plotting functions
+# Enhanced plotting function
 def plot_vehicle_data(vehicle_id, df):
     vehicle_data = df[df['vehicle_id'] == vehicle_id]
 
-    fig, axes = plt.subplots(3, 1, figsize=(10, 15), sharex=True)
+    plt.style.use('dark_background')
 
-    axes[0].plot(vehicle_data['timestamp'], vehicle_data['distance_travelled'], label='Distance Travelled (km)')
-    axes[0].set_ylabel('Distance (km)')
-    axes[0].set_title(f'Vehicle {vehicle_id} - Distance Travelled Over Time')
-    axes[0].legend()
+    # Create a custom colormap
+    colors = ['#FF00FF', '#00FFFF', '#FFFF00']  # Magenta, Cyan, Yellow
+    n_bins = 100
+    cmap = LinearSegmentedColormap.from_list('custom', colors, N=n_bins)
 
-    axes[1].plot(vehicle_data['timestamp'], vehicle_data['tire_wear'], label='Tire Wear', color='orange')
-    axes[1].set_ylabel('Tire Wear')
-    axes[1].set_title(f'Vehicle {vehicle_id} - Tire Wear Over Time')
-    axes[1].legend()
+    fig, axes = plt.subplots(3, 1, figsize=(12, 18), sharex=True, facecolor='#1C1C1C')
+    fig.suptitle(f'Vehicle {vehicle_id} - Performance Metrics Over Time', fontsize=20, color='white', fontweight='bold')
 
-    axes[2].plot(vehicle_data['timestamp'], vehicle_data['fuel_consumed'], label='Fuel Consumed (liters)', color='green')
-    axes[2].set_ylabel('Fuel Consumed (liters)')
-    axes[2].set_title(f'Vehicle {vehicle_id} - Fuel Consumed Over Time')
-    axes[2].legend()
+    # Distance Travelled
+    sns.lineplot(x='timestamp', y='distance_travelled', data=vehicle_data, ax=axes[0], linewidth=2, color='#FF00FF')
+    axes[0].set_ylabel('Distance (km)', fontsize=12, color='white')
+    axes[0].set_title('Distance Travelled', fontsize=16, color='white', fontweight='bold')
+    axes[0].fill_between(vehicle_data['timestamp'], vehicle_data['distance_travelled'], alpha=0.3, color='#FF00FF')
 
-    plt.xlabel('Timestamp')
+    # Tire Wear
+    sns.lineplot(x='timestamp', y='tire_wear', data=vehicle_data, ax=axes[1], linewidth=2, color='#00FFFF')
+    axes[1].set_ylabel('Tire Wear', fontsize=12, color='white')
+    axes[1].set_title('Tire Wear', fontsize=16, color='white', fontweight='bold')
+    axes[1].fill_between(vehicle_data['timestamp'], vehicle_data['tire_wear'], alpha=0.3, color='#00FFFF')
+
+    # Fuel Consumed
+    sns.lineplot(x='timestamp', y='fuel_consumed', data=vehicle_data, ax=axes[2], linewidth=2, color='#FFFF00')
+    axes[2].set_ylabel('Fuel Consumed (liters)', fontsize=12, color='white')
+    axes[2].set_title('Fuel Consumed', fontsize=16, color='white', fontweight='bold')
+    axes[2].fill_between(vehicle_data['timestamp'], vehicle_data['fuel_consumed'], alpha=0.3, color='#FFFF00')
+
+    for ax in axes:
+        ax.grid(True, linestyle='--', alpha=0.7)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_color('#888888')
+        ax.spines['left'].set_color('#888888')
+        ax.tick_params(colors='white')
+
+    plt.xlabel('Timestamp', fontsize=12, color='white')
     plt.xticks(rotation=45)
+    
+    # Format x-axis to show dates nicely
+    locator = mdates.AutoDateLocator()
+    formatter = mdates.ConciseDateFormatter(locator)
+    axes[2].xaxis.set_major_locator(locator)
+    axes[2].xaxis.set_major_formatter(formatter)
+
     plt.tight_layout()
+    
+    # Add animation
+    scatter_points = []
+    for ax in axes:
+        scatter, = ax.plot([], [], 'o', color='white', markersize=8)
+        scatter_points.append(scatter)
+
+    def animate(i):
+        for j, metric in enumerate(['distance_travelled', 'tire_wear', 'fuel_consumed']):
+            x = vehicle_data['timestamp'].iloc[:i]
+            y = vehicle_data[metric].iloc[:i]
+            scatter_points[j].set_data(x, y)
+        return scatter_points
+
+    anim = FuncAnimation(fig, animate, frames=len(vehicle_data), interval=50, blit=True, repeat=False)
+
     plt.show()
 
 # List of vehicle IDs to plot
