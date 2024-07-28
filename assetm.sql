@@ -10,9 +10,7 @@ CREATE TABLE Vehicles (
     vehicle_type VARCHAR(50),
     distance_travelled INTEGER,
     average_fuel INTEGER,
-    last_service_date DATE,
-    driver_name VARCHAR(100),
-    driver_id CHAR(10) UNIQUE
+    last_service_date DATE
 );
 
 -- Create the Parks table
@@ -33,7 +31,6 @@ CREATE TABLE Buildings (
     maintenance_avg_cost NUMERIC(10, 2),
     water_bill NUMERIC(10, 2),
     electricity_bill NUMERIC(10, 2),
-    budget_provided NUMERIC(10, 2)
 );
 
 -- Create the Roads table
@@ -42,10 +39,7 @@ CREATE TABLE Roads (
     road_name VARCHAR(100) UNIQUE,
     road_length NUMERIC(10, 2),
     last_maintenance DATE,
-    maintenance_avg_cost NUMERIC(10, 2),
-    last_complaint DATE,
-    last_complaint_resolved DATE,
-    budget_provided NUMERIC(10, 2)
+    maintenance_avg_cost NUMERIC(10, 2)
 );
 
 -- Create the Monuments table
@@ -54,11 +48,7 @@ CREATE TABLE Monuments (
     monument_name VARCHAR(100) UNIQUE,
     monument_length NUMERIC(10, 2),
     last_maintenance DATE,
-    maintenance_avg_cost NUMERIC(10, 2),
-    last_complaint DATE,
-    last_complaint_resolved DATE,
-    budget_provided NUMERIC(10, 2),
-    upcoming_maintenance DATE
+    maintenance_avg_cost NUMERIC(10, 2)
 );
 
 
